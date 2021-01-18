@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.17)
+project(PROG2400_700_lectures)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(echo echo/main.cpp)
+add_executable(commandline commandline/main.cpp)
+add_executable(stringstream stringstream/main.cpp)
