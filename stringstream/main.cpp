@@ -18,7 +18,7 @@ int main(int argc, char** argv) {
     ss >> command;
 
     if (strlen(command) > 1) {
-        cout << "You entered some text" << endl;
+    		cout << "You entered some text" << endl;
     } else {
         cout << "You entered a " << command << " command" << endl;
 
