@@ -81,6 +81,38 @@ public:
         }
     }
 
+    // insert data before "before" value
+    void Insert(int data, int before) {
+        LinkedListNode* newNode = new LinkedListNode();
+        newNode->data = data;
+
+        LinkedListNode* node = start;
+        LinkedListNode* prev = nullptr;
+
+        // find node to insert before
+        while (node != nullptr) {
+            if (node->data == before) {
+                // found the node!
+                break;
+            }
+            prev = node;
+            node = node->next;
+        }
+
+        // found the node, so insert
+        if (node != nullptr) {
+            if (prev == nullptr) {
+                // inserting at the start of the chain
+                newNode->next = start;
+                start = newNode;
+            } else {
+                // inserting in the middle of the chain
+                newNode->next = prev->next;
+                prev->next = newNode;
+            }
+        }
+    }
+
     friend ostream& operator<<(ostream& output, LinkedList& list);
 };
 
@@ -115,6 +147,14 @@ int main() {
     list.Delete(3);
 
     cout << "Test 2" << endl;
+    cout << "------" << endl;
+    cout << list << endl;
+
+    // test 3
+    list.Insert(6, 2);  // case 1: insert 6 before the value of 2
+    list.Insert(0, 1);  // case 2: insert 0 at the beginning
+
+    cout << "Test 3" << endl;
     cout << "------" << endl;
     cout << list << endl;
 
