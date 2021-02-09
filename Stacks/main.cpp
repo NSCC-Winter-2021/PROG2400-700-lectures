@@ -3,26 +3,43 @@
 
 using namespace std;
 
+class MazePosition {
+public:
+    int row;
+    int col;
+
+    MazePosition() : row(-1), col(-1) {}
+    MazePosition(int row, int col) : row(row), col(col) {}
+    MazePosition(const MazePosition& pos) : MazePosition(pos.row, pos.col) {}
+
+    friend ostream& operator<<(ostream& output, MazePosition pos);
+};
+
+ostream& operator<<(ostream& output, MazePosition pos) {
+    output << "(" << pos.row << "," << pos.col << ")";
+    return output;
+}
+
 class Node {
 public:
-    int data;
+    MazePosition pos;
     Node* next;
     Node* prev;
 
-    Node() : data(-1), next(nullptr), prev(nullptr) {}
+    Node() : next(nullptr), prev(nullptr) {}
 };
 
-class Stack {
+class MazeStack {
 private:
     Node* first;
     Node* last;
 
 public:
-    Stack() : first(nullptr), last(nullptr) {}
+    MazeStack() : first(nullptr), last(nullptr) {}
 
-    void Push(int data) {
+    void Push(MazePosition pos) {
         Node* node = new Node();
-        node->data = data;
+        node->pos = pos;
         node->prev = last;
 
         if (first == nullptr) {
@@ -36,7 +53,7 @@ public:
         last = node;
     }
 
-    int Pop() {
+    MazePosition Pop() {
 
         // have a node to pop
         if (first != nullptr) {
@@ -57,31 +74,31 @@ public:
                 first = nullptr;
             }
 
-            int temp = node->data;
+            MazePosition temp = node->pos;
 
             delete node;
 
             return temp;
         }
 
-        return -1;
+        return MazePosition();
     }
 
-    int Peek() {
+    MazePosition Peek() {
         if (last != nullptr) {
-            return last->data;
+            return last->pos;
         }
-        return -1;
+        return MazePosition();
     }
 
-    friend ostream& operator<<(ostream& output, Stack& stack);
+    friend ostream& operator<<(ostream& output, MazeStack& stack);
 };
 
-ostream& operator<<(ostream& output, Stack& stack) {
+ostream& operator<<(ostream& output, MazeStack& stack) {
     Node* node = stack.first;
 
     while (node != nullptr) {
-        output << node->data << " ";
+        output << node->pos << endl;
         node = node->next;
     }
 
@@ -90,13 +107,13 @@ ostream& operator<<(ostream& output, Stack& stack) {
 
 int main() {
 
-    Stack stack;
+    MazeStack stack;
 
-    stack.Push(1);
-    stack.Push(2);
-    stack.Push(3);
-    stack.Push(4);
-    stack.Push(5);
+    stack.Push({1, 1});
+    stack.Push({2, 1});
+    stack.Push({3, 1});
+    stack.Push({4, 1});
+    stack.Push({5, 1});
 
     // Test 1
     cout << "Test 1" << endl;
@@ -113,10 +130,18 @@ int main() {
     cout << "Test 3" << endl;
     cout << "------" << endl;
 
-    while (stack.Peek() != -1) {
+    while (stack.Peek().row != -1) {
         cout << stack.Pop() << endl;
         cout << stack << endl;
     }
+
+    // ----
+
+    //Maze maze;
+
+    //maze.ReadTextFile(filenameIn);
+    //maze.Solve();
+    //maze.WriteTextFile(filenameOut);
 
     return 0;
 
