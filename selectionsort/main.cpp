@@ -14,16 +14,16 @@ void selectionsort(int *array, int len) {
 
     for (int i = 0; i < len - 1; ++i) {
 
-        int lowest = i;
+        int highest = i;
         for (int j = i; j < len; ++j) {
-            if (array[j] < array[lowest]) {
-                lowest = j;
+            if (array[j] > array[highest]) {
+                highest = j;
             }
         }
 
-        if (array[lowest] < array[i]) {
-            int temp = array[lowest];
-            array[lowest] = array[i];
+        if (array[highest] > array[i]) {
+            int temp = array[highest];
+            array[highest] = array[i];
             array[i] = temp;
         }
     }

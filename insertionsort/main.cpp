@@ -17,7 +17,7 @@ void insertionsort(int *array, int len) {
         int temp = array[i];
 
         int j;
-        for (j = i; j >= 0 && temp < array[j-1]; j--) {
+        for (j = i; j > 0 && temp > array[j-1]; j--) {
             array[j] = array[j-1];
         }
 
