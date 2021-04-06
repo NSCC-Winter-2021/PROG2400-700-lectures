@@ -13,19 +13,18 @@ public:
 
     }
 
-    Person& operator<<(string data) {
-
-        stringstream ss;
-        ss << data;
-
-        getline(ss, FirstName, ',');
-        getline(ss, LastName, ',');
-        ss >> Age;
-
-        return *this;
-    }
+    friend istream& operator>>(istream& input, Person& p);
 
 };
+
+istream& operator>>(istream& input, Person& p) {
+
+    getline(input, p.LastName, ',');
+    getline(input, p.FirstName, ',');
+    input >> p.Age;
+
+    return input;
+}
 
 int main() {
 
@@ -33,8 +32,11 @@ int main() {
     string data = "Smith,John,45";
 
     // create object based on string
+    stringstream ss;
+    ss << data;
+
     Person p;
-    p << data;
+    ss >> p;
 
     cout << p.FirstName << " " << p.LastName << ", Age: " << p.Age << endl;
 
